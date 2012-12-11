@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	   					   http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+	   					   http://www.springframework.org/schema/context
+	   					   http://www.springframework.org/schema/context/spring-context-3.1.xsd
+	   					   http://www.springframework.org/schema/aop
+	   					   http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+	   					   http://www.springframework.org/schema/tx
+	   					   http://www.springframework.org/schema/tx/spring-tx-3.1.xsd 
+	   					   http://www.springframework.org/schema/util 
+	   					   http://www.springframework.org/schema/util/spring-util-3.1.xsd">
+    <!--
+        xmlns:security="http://www.springframework.org/schema/security"
+        http://www.springframework.org/schema/security
+        http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+    -->
+
+    <context:property-placeholder/>
+    <context:component-scan base-package="org.github.alahijani.zprojects.service"/>
+    <context:annotation-config/>
+
+    <aop:aspectj-autoproxy/>
+    <tx:annotation-driven/>
+    <tx:jta-transaction-manager/>
+
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"/>
+
+    <bean id="dataSource" class="org.apache.derby.jdbc.EmbeddedDataSource">
+        <property name="databaseName" value="${user.home}/.zprojects"/>
+        <property name="user" value="zprojects"/>
+        <property name="password" value="zprojects"/>
+        <property name="createDatabase" value="create"/>
+    </bean>
+
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+          p:persistenceUnitName="zprojects">
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter"/>
+        </property>
+        <property name="jpaPropertyMap">
+            <map>
+                <entry key="eclipselink.target-database" value="Derby"/>
+                <entry key="eclipselink.ddl-generation" value="drop-and-create-tables"/>
+                <entry key="eclipselink.ddl-generation.output-mode" value="database"/>
+                <entry key="eclipselink.weaving" value="false"/>
+            </map>
+        </property>
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+</beans>
