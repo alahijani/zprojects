@@ -6,11 +6,24 @@
            version="2.5">
 
 
-    <display-name>Archetype Created Web Application</display-name>
+    <display-name>zProjects Web Application</display-name>
 
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+
+    <filter>
+        <filter-name>filterChainProxy</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+        <init-param>
+            <param-name>targetBeanName</param-name>
+            <param-value>org.springframework.security.filterChainProxy</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>filterChainProxy</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
