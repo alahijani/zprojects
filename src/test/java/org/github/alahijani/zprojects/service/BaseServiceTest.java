@@ -19,12 +19,12 @@ public class BaseServiceTest extends AbstractTransactionalJUnit4SpringContextTes
     @Resource
     protected DataSource dataSource;
 
+    @PersistenceContext
+    protected EntityManager em;
+
     @Test
     public void testDataSource() throws SQLException {
     }
-
-    @PersistenceContext
-    EntityManager em;
 
     @Test
     public void testEntityManager() {
