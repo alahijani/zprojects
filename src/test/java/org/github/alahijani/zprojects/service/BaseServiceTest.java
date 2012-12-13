@@ -17,7 +17,7 @@ import java.util.List;
 @ContextConfiguration
 public class BaseServiceTest extends AbstractTransactionalJUnit4SpringContextTests {
     @Resource
-    DataSource dataSource;
+    protected DataSource dataSource;
 
     @Test
     public void testDataSource() throws SQLException {

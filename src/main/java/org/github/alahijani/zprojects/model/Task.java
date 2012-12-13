@@ -1,20 +1,20 @@
 package org.github.alahijani.zprojects.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * @author Ali Lahijani
  */
 @Entity
-@Table(name = "Tasks")
+@Table(name = "tasks")
 public class Task {
     @Id
+    @GeneratedValue
     private String id;
     @ManyToOne
     private Project project;
+    private String title;
+    private String description;
 
     public String getId() {
         return id;
