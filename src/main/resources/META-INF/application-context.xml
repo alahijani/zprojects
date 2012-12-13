@@ -54,7 +54,7 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <security:http create-session="never" auto-config="true">
+    <security:http create-session="ifRequired" auto-config="true">
         <security:intercept-url pattern="/**" access="ROLE_USER" />
     </security:http>
 
