@@ -1,0 +1,35 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.contents {
+    margin: 200px auto auto;
+}
+
+td.centered {
+    text-align: center;
+}
+
+div.entities {
+    float: left;
+    border: 1px solid orange;
+}
+
+table.grid td {
+    border: 1px solid gray;
+}
+
+table.grid thead {
+    background: #87cefa;
+}
+
+a.button {
+    background: gray;
+    color: white;
+    margin: 2px;
+    float: right;
+}
+
+a.button:hover {
+
+}

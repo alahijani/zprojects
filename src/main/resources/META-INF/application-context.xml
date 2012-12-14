@@ -54,7 +54,10 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
+    <!--<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />-->
+
     <security:http create-session="ifRequired" auto-config="true">
+        <security:intercept-url pattern="/favicon.ico" access="ROLE_ANONYMOUS" />
         <security:intercept-url pattern="/**" access="ROLE_USER" />
     </security:http>
 
