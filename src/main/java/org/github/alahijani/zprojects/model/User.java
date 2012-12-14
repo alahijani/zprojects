@@ -1,5 +1,7 @@
 package org.github.alahijani.zprojects.model;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.annotation.Nonnull;
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
@@ -16,7 +18,8 @@ public class User {
 
     @Nonnull
     @Column(nullable = false, unique = true)
-    @Pattern(regexp = "[\\w_\\-.$]{5,}")
+    @Pattern(regexp = "[\\w_\\-.$]*", message = "{format.user.username}")
+    @Length(min = 5, message = "{length.user.username}")
     private String username;
 
     @Nonnull

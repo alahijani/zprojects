@@ -21,7 +21,9 @@
     <bean class="org.github.alahijani.zprojects.controller.UserBean"/>
     <bean class="org.github.alahijani.zprojects.controller.MainController"/>
 
-    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" >
+        <property name="validationMessageSource" ref="messageSource" />
+    </bean>
 
     <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
         <!-- <property name="webBindingInitializer"> <bean class="org.springframework.samples.petclinic.web.ClinicBindingInitializer"/> </property> -->
@@ -42,5 +44,14 @@
         <property name="prefix" value="/WEB-INF/jsp/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
+
+    <!-- Application Message Bundle -->
+   	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+   		<property name="basename" value="/WEB-INF/messages/messages" />
+   		<property name="cacheSeconds" value="0" />
+   	</bean>
+
+    <!-- Saves a locale change using a cookie -->
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver" />
 
 </beans>

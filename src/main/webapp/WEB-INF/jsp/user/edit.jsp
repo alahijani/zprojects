@@ -2,7 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="fo" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
     <title>Manage Users</title>
@@ -10,21 +9,33 @@
 </head>
 <body>
 <div class="container">
+    <%--@elvariable id="user" type="org.github.alahijani.zprojects.model.User"--%>
+    <c:choose>
+        <c:when test="${empty user.id}">
+            <h2>Create User</h2>
+        </c:when>
+        <c:otherwise>
+            <h2>Edit User</h2>
+        </c:otherwise>
+    </c:choose>
+
     <form:form modelAttribute="user" action="." method="post">
         <p>
-            <form:label path="username" for="username"/>
-            <fo:input path="username"/>
+            <form:label path="username" for="username" cssErrorClass="error"/>
+            <form:input path="username"/>
             <form:errors path="username"/>
         </p>
 
         <p>
-            <form:label path="fullName" for="fullName"/>
-            <fo:input path="fullName"/>
+            <form:label path="fullName" for="fullName" cssErrorClass="error"/>
+            <form:input path="fullName"/>
             <form:errors path="fullName"/>
         </p>
 
         <input value="Save" type="submit">
     </form:form>
+
+    <%--<span><c:out value="${globalMessage}" escapeXml="true"/></span>--%>
 </div>
 </body>
 </html>
