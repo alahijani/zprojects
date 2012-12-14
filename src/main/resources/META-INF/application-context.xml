@@ -55,12 +55,12 @@
     </bean>
 
     <!-- Application Message Bundle -->
-   	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-   		<property name="basename" value="/WEB-INF/messages/messages" />
-   		<property name="cacheSeconds" value="0" />
-   	</bean>
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basename" value="/WEB-INF/messages/messages"/>
+        <property name="cacheSeconds" value="0"/>
+    </bean>
 
-    <!--<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />-->
+    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 
     <security:http pattern="/favicon.ico" security="none"/>
     <security:http create-session="ifRequired" auto-config="true" use-expressions="true">

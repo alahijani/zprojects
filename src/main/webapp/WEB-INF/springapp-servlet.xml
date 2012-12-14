@@ -21,10 +21,6 @@
     <bean class="org.github.alahijani.zprojects.controller.UserBean"/>
     <bean class="org.github.alahijani.zprojects.controller.MainController"/>
 
-    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" >
-        <property name="validationMessageSource" ref="messageSource" />
-    </bean>
-
     <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
         <!-- <property name="webBindingInitializer"> <bean class="org.springframework.samples.petclinic.web.ClinicBindingInitializer"/> </property> -->
     </bean>

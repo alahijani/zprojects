@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <html>
 <head>
     <title>Manage Users</title>
@@ -21,13 +22,13 @@
 
     <form:form modelAttribute="user" action="." method="post">
         <p>
-            <form:label path="username" for="username" cssErrorClass="error"/>
+            <form:label path="username" for="username" cssErrorClass="error"><spring:message code="user.username"/></form:label><br/>
             <form:input path="username"/>
             <form:errors path="username"/>
         </p>
 
         <p>
-            <form:label path="fullName" for="fullName" cssErrorClass="error"/>
+            <form:label path="fullName" for="fullName" cssErrorClass="error"><spring:message code="user.fullName"/></form:label><br/>
             <form:input path="fullName"/>
             <form:errors path="fullName"/>
         </p>
