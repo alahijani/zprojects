@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.persistence.NoResultException;
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -29,30 +30,8 @@ public class UserBean {
         return "user/list";
     }
 
-/*
-    @RequestMapping(value = "/user", method = RequestMethod.POST)
-    public String create(@ModelAttribute("userCommand") UserCommand userCommand) {
-        if (userCommand == null) {
-            throw new IllegalArgumentException("A userDt is required");
-        }
-        User user = createUserFromUserCommand(userCommand);
-        return "redirect:/user/" + user.getId();
-    }
-*/
-
-/*
-    @RequestMapping(value = "/user", method = RequestMethod.POST)
-    public String create(@ModelAttribute("userCommand") UserCommand userCommand) {
-        if (userCommand == null) {
-            throw new IllegalArgumentException("A userDt is required");
-        }
-        User user = createUserFromUserCommand(userCommand);
-        return "redirect:/user/" + user.getId();
-    }
-*/
-
     @RequestMapping(value = "/new", method = RequestMethod.GET)
-    public String createForm(ModelMap modelMap) {
+    public String newForm(ModelMap modelMap) {
         modelMap.addAttribute("user", new User());
 
         return "user/edit";
@@ -69,13 +48,17 @@ public class UserBean {
     }
 
     @RequestMapping(method=RequestMethod.POST)
-   	public String create(/*@Valid*/ User user, BindingResult result) {
-   		if (result.hasErrors()) {
-   			return "user/edit";
-   		}
+   	public String save(@Valid User user, BindingResult result) {
+        if (userService.duplicateUsername(user)) {
+            result.rejectValue("username", "duplicate");
+        }
+        if (result.hasErrors()) {
+            return "user/edit";
+        }
+
         userService.save(user);
 
-   		return "redirect:/user/" + user.getUsername();
-   	}
+        return "redirect:/user/" + user.getUsername();
+    }
 
 }
