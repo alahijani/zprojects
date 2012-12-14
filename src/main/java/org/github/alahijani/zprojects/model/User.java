@@ -2,6 +2,7 @@ package org.github.alahijani.zprojects.model;
 
 import javax.annotation.Nonnull;
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 
 /**
  * @author Ali Lahijani
@@ -15,6 +16,7 @@ public class User {
 
     @Nonnull
     @Column(nullable = false, unique = true)
+    @Pattern(regexp = "[\\w_\\-.$]{5,}")
     private String username;
 
     @Nonnull
