@@ -54,18 +54,24 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
+    <!-- Application Message Bundle -->
+   	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+   		<property name="basename" value="/WEB-INF/messages/messages" />
+   		<property name="cacheSeconds" value="0" />
+   	</bean>
+
     <!--<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />-->
 
-    <security:http create-session="ifRequired" auto-config="true">
-        <security:intercept-url pattern="/favicon.ico" access="ROLE_ANONYMOUS" />
-        <security:intercept-url pattern="/**" access="ROLE_USER" />
+    <security:http pattern="/favicon.ico" security="none"/>
+    <security:http create-session="ifRequired" auto-config="true" use-expressions="true">
+        <security:intercept-url pattern="/**" access="hasRole('user')"/>
     </security:http>
 
     <security:authentication-manager>
         <security:authentication-provider>
             <security:user-service>
-                <security:user name="admin" password="pwd" authorities="ROLE_USER, ROLE_ADMIN"/>
-                <security:user name="ali" password="alispassword" authorities="ROLE_USER"/>
+                <security:user name="admin" password="pwd" authorities="user, admin"/>
+                <security:user name="ali" password="alispassword" authorities="user"/>
             </security:user-service>
         </security:authentication-provider>
     </security:authentication-manager>
