@@ -11,5 +11,7 @@
     <a href="<c:url value="/user/"/>"><spring:message code="user.manage"/></a>
 </sec:authorize>
 
+<a href="<c:url value="/logout"/>"><spring:message code="logout"/></a>
+
 </body>
 </html>
