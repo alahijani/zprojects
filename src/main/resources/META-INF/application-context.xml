@@ -46,7 +46,7 @@
         <property name="jpaPropertyMap">
             <map>
                 <entry key="eclipselink.target-database" value="Derby"/>
-                <entry key="eclipselink.ddl-generation" value="drop-and-create-tables"/>
+                <entry key="eclipselink.ddl-generation" value="create-tables"/>
                 <entry key="eclipselink.ddl-generation.output-mode" value="database"/>
                 <entry key="eclipselink.weaving" value="false"/>
             </map>
