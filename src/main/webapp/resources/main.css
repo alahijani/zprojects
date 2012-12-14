@@ -13,10 +13,17 @@ td.centered {
 div.entities {
     float: left;
     border: 1px solid orange;
+    padding: 2px;
+}
+
+table.grid {
+    border-collapse: collapse;
+    margin-bottom: 1em;
 }
 
 table.grid td {
     border: 1px solid gray;
+    padding: 2px;
 }
 
 table.grid thead {
@@ -26,7 +33,6 @@ table.grid thead {
 a.button {
     background: gray;
     color: white;
-    margin: 2px;
     float: right;
 }
 
