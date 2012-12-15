@@ -9,6 +9,7 @@
 
 <sec:authorize access="hasRole('admin')">
     <a href="<c:url value="/user/"/>"><spring:message code="user.manage"/></a>
+    <a href="<c:url value="/project/"/>"><spring:message code="project.manage"/></a>
 </sec:authorize>
 
 <a href="<c:url value="/logout"/>"><spring:message code="logout"/></a>
