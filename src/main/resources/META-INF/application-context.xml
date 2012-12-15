@@ -45,10 +45,11 @@
         </property>
         <property name="jpaPropertyMap">
             <map>
+                <entry key="eclipselink.weaving" value="false"/>
                 <entry key="eclipselink.target-database" value="Derby"/>
                 <entry key="eclipselink.ddl-generation" value="create-tables"/>
                 <entry key="eclipselink.ddl-generation.output-mode" value="database"/>
-                <entry key="eclipselink.weaving" value="false"/>
+                <!--<entry key="eclipselink.create-ddl-jdbc-file-name" value="DDL.sql"/>-->
             </map>
         </property>
         <property name="dataSource" ref="dataSource"/>
@@ -64,7 +65,7 @@
 
     <security:http pattern="/favicon.ico" security="none"/>
     <security:http create-session="ifRequired" auto-config="true" use-expressions="true">
-        <security:intercept-url pattern="/user/**" access="hasRole('admin')"/>
+        <security:intercept-url method="POST" pattern="/user/**" access="hasRole('admin')"/>
         <security:intercept-url pattern="/**" access="isAuthenticated()"/>
         <security:logout logout-url="/logout" />
     </security:http>
