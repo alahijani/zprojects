@@ -27,7 +27,7 @@
                     <td><c:out value="${user.username}"/></td>
                     <td><c:out value="${user.enabled}"/></td>
                     <td><c:out value="${user.admin}"/></td>
-                    <td><a href="<c:url value="/user/${user.id}"/>" class="button">Edit</a></td>
+                    <td><a href="<c:url value="/user/${user.id}"/>" class="button">Details</a></td>
                 </tr>
             </c:forEach>
             <c:if test="${empty users}">

@@ -11,16 +11,9 @@
 <body>
 <div class="container">
     <%--@elvariable id="user" type="org.github.alahijani.zprojects.model.User"--%>
-    <c:choose>
-        <c:when test="${empty user.id}">
-            <h2>Create User</h2>
-        </c:when>
-        <c:otherwise>
-            <h2>Edit User</h2>
-        </c:otherwise>
-    </c:choose>
+    <h2>Create User</h2>
 
-    <form:form modelAttribute="user" action="." method="post">
+    <form:form modelAttribute="user" action="/user/new" method="post">
 
         <p>
             <form:label path="fullName" for="fullName" cssErrorClass="error"><spring:message code="user.fullName"/></form:label><br/>
@@ -52,10 +45,9 @@
             <form:errors path="admin"/>
         </p>
 
-        <input value="Save" type="submit">
+        <input value="Create" type="submit">
     </form:form>
 
-    <%--<span><c:out value="${globalMessage}" escapeXml="true"/></span>--%>
 </div>
 </body>
 </html>

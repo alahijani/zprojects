@@ -37,5 +37,25 @@ a.button {
 }
 
 a.button:hover {
+}
 
+.user .fullName {
+    margin: 0;
+}
+
+.user .username {
+    margin: 0;
+    padding-left: 30px;
+}
+
+.user .admin {
+    margin: 0;
+    padding-left: 30px;
+    font-style: italic;
+}
+
+.user .disabled {
+    margin: 0;
+    padding-left: 30px;
+    font-style: italic;
 }
