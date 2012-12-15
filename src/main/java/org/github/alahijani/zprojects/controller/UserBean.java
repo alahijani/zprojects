@@ -32,7 +32,9 @@ public class UserBean {
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newForm(ModelMap modelMap) {
-        modelMap.addAttribute("user", new User());
+        User user = new User();
+        user.setEnabled(true);  // by default checked in the form
+        modelMap.addAttribute("user", user);
 
         return "user/edit";
     }

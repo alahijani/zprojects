@@ -15,6 +15,8 @@
             <tr>
                 <td>Full name</td>
                 <td>Username</td>
+                <td>Enabled</td>
+                <td>Administrator</td>
                 <td>Actions</td>
             </tr>
             </thead>
@@ -23,7 +25,9 @@
                 <tr>
                     <td><c:out value="${user.fullName}"/></td>
                     <td><c:out value="${user.username}"/></td>
-                    <td><c:out value="${user.id}"/></td>
+                    <td><c:out value="${user.enabled}"/></td>
+                    <td><c:out value="${user.admin}"/></td>
+                    <td><a href="<c:url value="/user/${user.id}"/>" class="button">Edit</a></td>
                 </tr>
             </c:forEach>
             <c:if test="${empty users}">

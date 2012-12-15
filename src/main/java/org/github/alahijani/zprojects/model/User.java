@@ -23,6 +23,14 @@ public class User {
     private String username;
 
     @Nonnull
+    @Column(nullable = false)
+    @Length(min = 5, message = "{length.user.password}")
+    private String password;
+
+    private boolean enabled;
+    private boolean admin;
+
+    @Nonnull
     private String fullName;
 
     public String getId() {
@@ -49,5 +57,30 @@ public class User {
 
     public void setFullName(@Nonnull String fullName) {
         this.fullName = fullName;
+    }
+
+    @Nonnull
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(@Nonnull String password) {
+        this.password = password;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
     }
 }

@@ -46,7 +46,7 @@
         <property name="jpaPropertyMap">
             <map>
                 <entry key="eclipselink.target-database" value="Derby"/>
-                <entry key="eclipselink.ddl-generation" value="drop-and-create-tables"/>
+                <entry key="eclipselink.ddl-generation" value="create-tables"/>
                 <entry key="eclipselink.ddl-generation.output-mode" value="database"/>
                 <entry key="eclipselink.weaving" value="false"/>
             </map>
@@ -57,7 +57,7 @@
     <!-- Application Message Bundle -->
     <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
         <property name="basename" value="/WEB-INF/messages/messages"/>
-        <property name="cacheSeconds" value="0"/>
+        <property name="cacheSeconds" value="1"/>
     </bean>
 
     <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
@@ -65,16 +65,16 @@
     <security:http pattern="/favicon.ico" security="none"/>
     <security:http create-session="ifRequired" auto-config="true" use-expressions="true">
         <security:intercept-url pattern="/user/**" access="hasRole('admin')"/>
-        <security:intercept-url pattern="/**" access="hasRole('user')"/>
+        <security:intercept-url pattern="/**" access="isAuthenticated()"/>
         <security:logout logout-url="/logout" />
     </security:http>
 
     <security:authentication-manager>
         <security:authentication-provider>
-            <security:user-service>
-                <security:user name="admin" password="pwd" authorities="user, admin"/>
-                <security:user name="ali" password="alispassword" authorities="user"/>
-            </security:user-service>
+            <security:jdbc-user-service data-source-ref="dataSource"
+                                        users-by-username-query="select username,password,enabled from users where username = ?"
+                                        authorities-by-username-query="select username,'admin' from users where admin = 1 and username = ?"
+                    />                  <!--todo fix authorities-by-username-query-->
         </security:authentication-provider>
     </security:authentication-manager>
 </beans>
