@@ -39,9 +39,9 @@ public class UserBean {
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NoResultException.class)
-    @RequestMapping(value = "/{username}", method = RequestMethod.GET)
-    public String get(@PathVariable("username") String username, ModelMap map) {
-        User user = userService.findByUsername(username);
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public String get(@PathVariable("id") String id, ModelMap map) {
+        User user = userService.findById(id);
         map.put("user", user);
 
         return "user/edit";
@@ -56,9 +56,9 @@ public class UserBean {
             return "user/edit";
         }
 
-        userService.save(user);
+        user = userService.save(user);
 
-        return "redirect:/user/" + user.getUsername();
+        return "redirect:/user/" + user.getId();
     }
 
 }

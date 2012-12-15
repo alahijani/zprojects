@@ -53,6 +53,14 @@ public class UserService {
                         .getSingleResult();
     }
 
+    public User findById(String id) throws NoResultException {
+        return (User)
+                em.createQuery("select u from User u where u.id = :id")
+                        .setParameter("id", id)
+                        .setMaxResults(1)
+                        .getSingleResult();
+    }
+
     public boolean duplicateUsername(User user) {
         Query query;
         if (user.getId() == null) {
