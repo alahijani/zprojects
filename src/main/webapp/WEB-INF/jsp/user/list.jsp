@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%--@elvariable id="users" type="java.util.List<org.github.alahijani.zprojects.model.User>"--%>
 <html>
 <head>
@@ -13,10 +14,10 @@
         <table class="grid">
             <thead>
             <tr>
-                <td>Full name</td>
-                <td>Username</td>
-                <td>Enabled</td>
-                <td>Administrator</td>
+                <td><spring:message code="user.fullName"/></td>
+                <td><spring:message code="user.username"/></td>
+                <td><spring:message code="user.enabled"/></td>
+                <td><spring:message code="user.admin"/></td>
                 <td>Actions</td>
             </tr>
             </thead>
@@ -32,7 +33,7 @@
             </c:forEach>
             <c:if test="${empty users}">
                 <tr>
-                    <td colspan="3" class="centered">No data.</td>
+                    <td colspan="5" class="centered">No data.</td>
                 </tr>
             </c:if>
         </table>
