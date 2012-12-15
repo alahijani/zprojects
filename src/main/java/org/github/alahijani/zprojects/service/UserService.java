@@ -9,7 +9,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -18,13 +17,21 @@ import java.util.List;
 @Repository
 @Transactional
 public class UserService {
+
     @PersistenceContext
     private EntityManager em;
 
+    /**
+     * any initialization logic should be put here.
+     */
     @PostConstruct
-    void postConstruct() throws SQLException {
+    void postConstruct() {
     }
 
+    /**
+     * @return the collection of all users saved in the database, regardless of their
+     *         {@link User#isEnabled() enabled} status
+     */
     @SuppressWarnings("unchecked")
     public List<User> findAll() {
         return em.createQuery("select u from User u").getResultList();
@@ -61,6 +68,20 @@ public class UserService {
                         .getSingleResult();
     }
 
+    /**
+     * Called before a call to {@link #save(User)} to check if the {@code username} property of the
+     * {@code user} being saved is a duplicate.
+     * <p/>
+     * Returns true if <ul>
+     * <li>the {@code user} is new (transient), and its {@code username} property is already
+     * allotted to another user, or</li>
+     * <li>the {@code user} is persistent and it's {@code username} property is being changed,
+     * but its new {@code username} property is already allotted to another user.</li>
+     * </ul>
+     *
+     * @param user the entity which is being validated before save
+     * @return if the {@code username} property is a duplicate
+     */
     public boolean duplicateUsername(User user) {
         Query query;
         if (user.getId() == null) {
@@ -75,4 +96,5 @@ public class UserService {
         Number count = (Number) query.getSingleResult();
         return count.intValue() > 0;
     }
+
 }
