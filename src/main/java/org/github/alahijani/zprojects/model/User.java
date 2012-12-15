@@ -1,6 +1,7 @@
 package org.github.alahijani.zprojects.model;
 
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.annotation.Nonnull;
 import javax.persistence.*;
@@ -31,6 +32,7 @@ public class User {
     private boolean admin;
 
     @Nonnull
+    @NotBlank
     private String fullName;
 
     public String getId() {
