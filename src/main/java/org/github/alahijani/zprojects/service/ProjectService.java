@@ -64,6 +64,10 @@ public class ProjectService {
         return em.find(Project.class, id);
     }
 
+    public Project getReference(String id) throws NoResultException {
+        return em.getReference(Project.class, id);
+    }
+
     /**
      * Called before a call to {@link #save(Project)} to check if the {@code code} property of the
      * {@code project} being saved is a duplicate.
