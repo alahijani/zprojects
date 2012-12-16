@@ -26,7 +26,7 @@
                 <tr>
                     <td><c:out value="${project.title}"/></td>
                     <td><c:out value="${project.code}"/></td>
-                    <td><c:out value="${project.description}"/></td>
+                    <td><c:out value="${project.description}"/></td>    <%--todo can be too long!--%>
                     <td><a href="<c:url value="/project/${project.id}"/>" class="button">Details</a></td>
                 </tr>
             </c:forEach>
@@ -38,7 +38,7 @@
         </table>
 
         <sec:authorize access="hasRole('admin')">
-            <a href="<c:url value="/project/new"/>" class="button">Create...</a>
+            <a href="<c:url value="/project/new"/>" class="button">Create Project...</a>
         </sec:authorize>
     </div>
 </div>

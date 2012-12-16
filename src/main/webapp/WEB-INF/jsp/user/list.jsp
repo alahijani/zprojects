@@ -40,7 +40,7 @@
         </table>
 
         <sec:authorize access="hasRole('admin')">
-            <a href="<c:url value="/user/new"/>" class="button">Create...</a>
+            <a href="<c:url value="/user/new"/>" class="button">Create User...</a>
         </sec:authorize>
     </div>
 </div>
