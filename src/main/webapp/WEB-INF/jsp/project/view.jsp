@@ -4,6 +4,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib tagdir="/WEB-INF/tags/task" prefix="task" %>
 <html>
 <head>
     <title>Manage Projects</title>
@@ -15,6 +16,7 @@
 
     <div class="project">
         <h2 class="title"><c:out value="${project.title}"/></h2>
+
         <div class="code"><c:out value="${project.code}"/></div>
         <div class="description"><c:out value="${project.description}"/></div>
     </div>
@@ -50,6 +52,8 @@
             </form:form>
         </div>
     </sec:authorize>
+
+    <task:list/>
 
     <%--<span><c:out value="${globalMessage}" escapeXml="true"/></span>--%>
 </div>

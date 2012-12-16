@@ -1,7 +1,9 @@
 package org.github.alahijani.zprojects.controller;
 
 import org.github.alahijani.zprojects.model.Project;
+import org.github.alahijani.zprojects.model.Task;
 import org.github.alahijani.zprojects.service.ProjectService;
+import org.github.alahijani.zprojects.service.TaskService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.persistence.NoResultException;
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 /**
@@ -23,6 +26,8 @@ public class ProjectBean {
 
     @Resource
     private ProjectService projectService;
+    @Resource
+    private TaskService taskService;
 
     @InitBinder
     void initBinder(WebDataBinder binder) {
@@ -61,9 +66,15 @@ public class ProjectBean {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NoResultException.class)
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public String getById(@PathVariable("id") String id, ModelMap map) {
+    public String getById(@PathVariable("id") String id, ModelMap map, Principal principal) {
         Project project = projectService.findById(id);
         map.put("project", project);
+
+        if (principal != null) {
+            String username = principal.getName();
+            List<Task> tasks = taskService.findVisible(project, username);
+            map.put("tasks", tasks);
+        }
 
         return "project/view";
     }
