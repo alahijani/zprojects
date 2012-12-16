@@ -17,14 +17,21 @@
     <div class="task">
         <h2 class="title"><c:out value="${task.title}"/></h2>
 
-        <div class="description"><c:out value="${task.description}"/></div>
+        <div class="project">
+            <spring:message code="task.project"/>:
+            <a href="<c:url
+                    value="/project/${task.project.id}"/>"><c:out
+                    value="${task.project.title}"/></a>
+        </div>
         <c:if test="${!empty task.assignee}">
             <div class="assignee">
+                <spring:message code="task.assignee"/>:
                 <a href="<c:url
                         value="/user/${task.assignee.id}"/>"><c:out
                         value="${task.assignee.fullName}"/></a>
             </div>
         </c:if>
+        <div class="description"><c:out value="${task.description}"/></div>
     </div>
 
     <sec:authorize access="hasRole('admin')">
