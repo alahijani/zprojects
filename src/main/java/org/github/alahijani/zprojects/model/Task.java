@@ -3,6 +3,7 @@ package org.github.alahijani.zprojects.model;
 import org.hibernate.validator.constraints.Length;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.persistence.*;
 
 /**
@@ -18,6 +19,11 @@ public class Task {
     @ManyToOne
     @JoinColumn(nullable = false)
     private Project project;
+
+    @Nullable
+    @ManyToOne
+    @JoinColumn
+    private User assignee;
 
     @Nonnull
     @Column(nullable = false)
@@ -43,6 +49,15 @@ public class Task {
 
     public void setProject(Project project) {
         this.project = project;
+    }
+
+    @Nullable
+    public User getAssignee() {
+        return assignee;
+    }
+
+    public void setAssignee(@Nullable User assignee) {
+        this.assignee = assignee;
     }
 
     @Nonnull
