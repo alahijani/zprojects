@@ -39,23 +39,27 @@ a.button {
 a.button:hover {
 }
 
-.user .fullName {
+.user .fullName,
+.task .title,
+.project .title {
     margin: 0;
 }
 
-.user .username {
+.user .username,
+.user .admin,
+.user .disabled,
+.task .project,
+.task .assignee,
+.task .description,
+.project .code,
+.project .description {
     margin: 0;
     padding-left: 30px;
 }
 
-.user .admin {
-    margin: 0;
-    padding-left: 30px;
-    font-style: italic;
-}
-
-.user .disabled {
-    margin: 0;
-    padding-left: 30px;
+.user .admin,
+.user .disabled,
+.task .description,
+.project .description {
     font-style: italic;
 }
