@@ -24,12 +24,12 @@ public class Project {
 
     @Nonnull
     @Column(nullable = false)
-    @Length(min = 5, message = "{length.project.title}")
+    @Length(min = 5, message = "{length.title}")
     private String title;
 
     @Nonnull
     @Column(nullable = false)
-    @Length(min = 15, message = "{length.project.description}")
+    @Length(min = 15, message = "{length.description}")
     private String description;
 
     public String getId() {
