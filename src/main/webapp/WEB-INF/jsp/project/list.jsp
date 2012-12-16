@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%--@elvariable id="projects" type="java.util.List<org.github.alahijani.zprojects.model.Project>"--%>
 <html>
 <head>
@@ -36,7 +37,9 @@
             </c:if>
         </table>
 
-        <a href="<c:url value="/project/new"/>" class="button">Create...</a>
+        <sec:authorize access="hasRole('admin')">
+            <a href="<c:url value="/project/new"/>" class="button">Create...</a>
+        </sec:authorize>
     </div>
 </div>
 </body>
