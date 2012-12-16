@@ -61,11 +61,7 @@ public class ProjectService {
     }
 
     public Project findById(String id) throws NoResultException {
-        return (Project)
-                em.createQuery("select u from Project u where u.id = :id")
-                        .setParameter("id", id)
-                        .setMaxResults(1)
-                        .getSingleResult();
+        return em.find(Project.class, id);
     }
 
     /**
