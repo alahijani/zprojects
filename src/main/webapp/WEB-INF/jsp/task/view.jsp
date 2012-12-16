@@ -12,6 +12,7 @@
 <body>
 <div class="container">
     <%--@elvariable id="task" type="org.github.alahijani.zprojects.model.Task"--%>
+    <%--@elvariable id="allUsers" type="java.util.Map<java.lang.String, org.github.alahijani.zprojects.model.User>"--%>
 
     <div class="task">
         <h2 class="title"><c:out value="${task.title}"/></h2>
@@ -50,7 +51,8 @@
                     <form:label path="assignee" for="assignee" cssErrorClass="error"><spring:message
                             code="task.assignee"/></form:label><br/>
                     <form:select path="assignee">
-                        <form:options path="assignee"/>
+                        <form:option value="${null}" label="--- Select ---"/>
+                        <form:options items="${allUsers}" />
                     </form:select>
                     <form:errors path="assignee"/>
                 </p>

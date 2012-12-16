@@ -23,7 +23,7 @@
                     <td><c:out value="${task.description}"/></td>
                         <%--todo can be too long!--%>
                     <td><c:out value="${task.assignee.fullName}"/></td>
-                    <td><a href="<c:url value="/task/${task.id}"/>" class="button">Details</a></td>
+                    <td><a href="<c:url value="/project/${project.id}/task/${task.id}"/>" class="button">Details</a></td>
                 </tr>
             </c:forEach>
             <c:if test="${empty tasks}">

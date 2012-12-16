@@ -35,6 +35,20 @@ public class User {
     @NotBlank
     private String fullName;
 
+    public User() {
+    }
+
+    /**
+     * Used by {@link org.springframework.beans.TypeConverterDelegate} to convert from <code>String</code>
+     * to <code>User</code> for rendering a combo-box of users.
+     *
+     * @param id database identifier of this <code>User</code>
+     * @see org.github.alahijani.zprojects.controller.TaskBean#getAllUsers()
+     */
+    public User(String id) {
+        this.id = id;
+    }
+
     public String getId() {
         return id;
     }

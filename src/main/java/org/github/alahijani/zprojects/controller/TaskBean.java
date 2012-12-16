@@ -2,8 +2,10 @@ package org.github.alahijani.zprojects.controller;
 
 import org.github.alahijani.zprojects.model.Project;
 import org.github.alahijani.zprojects.model.Task;
+import org.github.alahijani.zprojects.model.User;
 import org.github.alahijani.zprojects.service.ProjectService;
 import org.github.alahijani.zprojects.service.TaskService;
+import org.github.alahijani.zprojects.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -14,7 +16,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.persistence.NoResultException;
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Ali Lahijani
@@ -27,6 +31,8 @@ public class TaskBean {
     private TaskService taskService;
     @Resource
     private ProjectService projectService;
+    @Resource
+    private UserService userService;
 
     @InitBinder
     void initBinder(WebDataBinder binder) {
@@ -44,12 +50,13 @@ public class TaskBean {
     }
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
-    public String getNew(ModelMap modelMap, @PathVariable("projectId") String projectId) {
+    public String getNew(ModelMap map, @PathVariable("projectId") String projectId) {
         Project project = projectService.getReference(projectId);
 
         Task task = new Task();
         task.setProject(project);
-        modelMap.addAttribute("task", task);
+        map.addAttribute("task", task);
+        map.addAttribute("allUsers", getAllUsers());
 
         return "task/new";
     }
@@ -77,6 +84,7 @@ public class TaskBean {
             throw new NoResultException();
 
         map.put("task", task);
+        map.addAttribute("allUsers", getAllUsers());
 
         return "task/view";
     }
@@ -98,6 +106,22 @@ public class TaskBean {
         task = taskService.save(task);
 
         return "redirect:/project/" + project.getId() + "/task/" + task.getId();
+    }
+
+    /**
+     * Returns the {@link UserService#findAll() collection of all users} ni a fashion that can be used
+     * for rendering a combo-box.
+     *
+     * @return the set of all users, each represented by its full name, indexed by database ID
+     */
+    private Map<String, String> getAllUsers() {
+        List<User> users = userService.findAll();
+
+        HashMap<String, String> map = new HashMap<String, String>(users.size());
+        for (User user : users) {
+            map.put(user.getId(), user.getFullName());
+        }
+        return map;
     }
 
 }
