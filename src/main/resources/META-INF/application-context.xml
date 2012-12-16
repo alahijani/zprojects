@@ -49,8 +49,9 @@
                 <entry key="eclipselink.target-database" value="Derby"/>
                 <entry key="eclipselink.ddl-generation" value="create-tables"/>
                 <!--<entry key="eclipselink.ddl-generation" value="drop-and-create-tables"/>-->
-                <entry key="eclipselink.ddl-generation.output-mode" value="both"/>
-                <entry key="eclipselink.create-ddl-jdbc-file-name" value="DDL.sql"/>
+                <entry key="eclipselink.ddl-generation.output-mode" value="database"/>
+                <!--<entry key="eclipselink.ddl-generation.output-mode" value="both"/>-->
+                <!--<entry key="eclipselink.create-ddl-jdbc-file-name" value="DDL.sql"/>-->
                 <entry key="eclipselink.logging.level.sql" value="FINE"/>
                 <entry key="eclipselink.logging.parameters" value="true"/>
             </map>
