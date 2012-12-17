@@ -136,8 +136,7 @@ public class TaskBean {
      * Returns the {@link UserService#findAll() collection of all users} in a fashion that can be used
      * for rendering a combo-box.
      *
-     * @return the set of all users, each represented by its {@link User#fullName full name}, indexed
-     *         by {@link User#id database ID}
+     * @return the set of all users, each represented by its {@link User#fullName full name}
      */
     private Map<User, String> getAllUsers() {
         List<User> users = userService.findAll();
