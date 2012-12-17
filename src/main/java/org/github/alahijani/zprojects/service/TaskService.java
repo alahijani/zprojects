@@ -8,9 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 
 /**
@@ -18,13 +15,14 @@ import java.util.List;
  */
 @Repository
 @Transactional
-public class TaskService {
-
-    @PersistenceContext
-    private EntityManager em;
+public class TaskService extends BaseService<Task> {
 
     @Resource
     private UserService userService;
+
+    public TaskService() {
+        super(Task.class);
+    }
 
     /**
      * any initialization logic should be put here.
@@ -79,20 +77,6 @@ public class TaskService {
                     .setParameter("userId", user.getId())
                     .getResultList();
         }
-    }
-
-    /**
-     * persists the given entity if it is transient, or updates the database if the entity is persistent.
-     *
-     * @param task the entity to save
-     * @return the same entity after save
-     */
-    public Task save(Task task) {
-        return em.merge(task);
-    }
-
-    public Task findById(String id) throws NoResultException {
-        return em.find(Task.class, id);
     }
 
 }

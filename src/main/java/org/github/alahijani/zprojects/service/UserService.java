@@ -5,9 +5,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
-import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
 
@@ -16,10 +14,11 @@ import java.util.List;
  */
 @Repository
 @Transactional
-public class UserService {
+public class UserService extends BaseService<User> {
 
-    @PersistenceContext
-    private EntityManager em;
+    public UserService() {
+        super(User.class);
+    }
 
     /**
      * any initialization logic should be put here.
@@ -38,16 +37,6 @@ public class UserService {
     }
 
     /**
-     * persists the given entity if it is transient, or updates the database if the entity is persistent.
-     *
-     * @param user the entity to save
-     * @return the same entity after save
-     */
-    public User save(User user) {
-        return em.merge(user);
-    }
-
-    /**
      * @param username the username to search for
      * @return the <code>User</code> having the given username
      * @throws NoResultException if no <code>User</code> in the database has the given username
@@ -58,10 +47,6 @@ public class UserService {
                         .setParameter("username", username)
                         .setMaxResults(1)
                         .getSingleResult();
-    }
-
-    public User findById(String id) throws NoResultException {
-        return em.find(User.class, id);
     }
 
     /**

@@ -5,9 +5,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
-import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
 
@@ -16,10 +14,11 @@ import java.util.List;
  */
 @Repository
 @Transactional
-public class ProjectService {
+public class ProjectService extends BaseService<Project> {
 
-    @PersistenceContext
-    private EntityManager em;
+    public ProjectService() {
+        super(Project.class);
+    }
 
     /**
      * any initialization logic should be put here.
@@ -31,19 +30,10 @@ public class ProjectService {
     /**
      * @return the collection of all projects saved in the database
      */
+    @Override
     @SuppressWarnings("unchecked")
     public List<Project> findAll() {
         return em.createQuery("select u from Project u").getResultList();
-    }
-
-    /**
-     * persists the given entity if it is transient, or updates the database if the entity is persistent.
-     *
-     * @param project the entity to save
-     * @return the same entity after save
-     */
-    public Project save(Project project) {
-        return em.merge(project);
     }
 
     /**
@@ -60,17 +50,9 @@ public class ProjectService {
                         .getSingleResult();
     }
 
-    public Project findById(String id) throws NoResultException {
-        return em.find(Project.class, id);
-    }
-
-    public Project getReference(String id) throws NoResultException {
-        return em.getReference(Project.class, id);
-    }
-
     /**
-     * Called before a call to {@link #save(Project)} to check if the {@code code} property of the
-     * {@code project} being saved is a duplicate.
+     * Called before a call to {@link #save(org.github.alahijani.zprojects.model.BaseEntity)}
+     * to check if the {@code code} property of the {@code project} being saved is a duplicate.
      * <p/>
      * Returns true if <ul>
      * <li>the {@code project} is new (transient), and its {@code code} property is already

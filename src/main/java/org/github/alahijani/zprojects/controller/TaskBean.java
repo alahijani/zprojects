@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.persistence.NoResultException;
 import javax.validation.Valid;
-import java.beans.PropertyEditorSupport;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,29 +37,7 @@ public class TaskBean {
     @InitBinder
     void initBinder(WebDataBinder binder) {
         binder.setDisallowedFields("id");
-        binder.registerCustomEditor(User.class, new PropertyEditorSupport() {
-
-            /**
-             * Converts a String to a User (when submitting form)
-             *
-             * @param text interpreted as {@link User#id database ID}
-             */
-            @Override
-            public void setAsText(String text) {
-                User user = new User(text);
-                setValue(user);
-            }
-
-            /**
-             * Converts a User to a String (when displaying form)
-             * @return a {@link User#id database ID}
-             */
-            @Override
-            public String getAsText() {
-                User user = (User) getValue();
-                return user.getId();
-            }
-        });
+        userService.registerCustomEditor(binder);
     }
 
     @RequestMapping(method = RequestMethod.GET)
