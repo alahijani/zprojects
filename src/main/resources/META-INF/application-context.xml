@@ -70,6 +70,9 @@
     <security:http pattern="/favicon.ico" security="none"/>
     <security:http create-session="ifRequired" auto-config="true" use-expressions="true">
         <security:intercept-url method="POST" pattern="/user/**" access="hasRole('admin')"/>
+        <security:intercept-url method="POST" pattern="/project/**" access="hasRole('admin')"/>
+        <security:intercept-url method="POST" pattern="/project/*/task/new" access="hasRole('admin')"/>
+        <!--<security:intercept-url method="POST" pattern="/project/*/task/{id}" access="hasPermission(id, 'task')"/>-->
         <security:intercept-url pattern="/**" access="isAuthenticated()"/>
         <security:logout logout-url="/logout" />
     </security:http>

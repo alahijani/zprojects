@@ -11,10 +11,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "tasks")
-public class Task {
-    @Id
-    @GeneratedValue
-    private String id;
+public class Task extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(nullable = false)
@@ -35,12 +32,11 @@ public class Task {
     @Length(min = 15, message = "{length.description}")
     private String description;
 
-    public String getId() {
-        return id;
+    public Task() {
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public Task(String id) {
+        super(id);
     }
 
     public Project getProject() {

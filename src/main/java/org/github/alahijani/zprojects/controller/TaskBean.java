@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.persistence.NoResultException;
 import javax.validation.Valid;
+import java.beans.PropertyEditorSupport;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +38,29 @@ public class TaskBean {
     @InitBinder
     void initBinder(WebDataBinder binder) {
         binder.setDisallowedFields("id");
+        binder.registerCustomEditor(User.class, new PropertyEditorSupport() {
+
+            /**
+             * Converts a String to a User (when submitting form)
+             *
+             * @param text interpreted as {@link User#id database ID}
+             */
+            @Override
+            public void setAsText(String text) {
+                User user = new User(text);
+                setValue(user);
+            }
+
+            /**
+             * Converts a User to a String (when displaying form)
+             * @return a {@link User#id database ID}
+             */
+            @Override
+            public String getAsText() {
+                User user = (User) getValue();
+                return user.getId();
+            }
+        });
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -115,12 +139,12 @@ public class TaskBean {
      * @return the set of all users, each represented by its {@link User#fullName full name}, indexed
      *         by {@link User#id database ID}
      */
-    private Map<String, String> getAllUsers() {
+    private Map<User, String> getAllUsers() {
         List<User> users = userService.findAll();
 
-        HashMap<String, String> map = new HashMap<String, String>(users.size());
+        HashMap<User, String> map = new HashMap<User, String>(users.size());
         for (User user : users) {
-            map.put(user.getId(), user.getFullName());
+            map.put(user, user.getFullName());
         }
         return map;
     }

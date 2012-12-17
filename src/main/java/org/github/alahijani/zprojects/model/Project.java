@@ -11,10 +11,7 @@ import javax.validation.constraints.Pattern;
  */
 @Entity
 @Table(name = "projects")
-public class Project {
-    @Id
-    @GeneratedValue
-    private String id;
+public class Project extends BaseEntity {
 
     @Nonnull
     @Column(nullable = false, unique = true)
@@ -32,12 +29,11 @@ public class Project {
     @Length(min = 15, message = "{length.description}")
     private String description;
 
-    public String getId() {
-        return id;
+    public Project() {
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public Project(String id) {
+        super(id);
     }
 
     @Nonnull
