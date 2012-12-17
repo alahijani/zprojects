@@ -65,7 +65,6 @@
         </div>
     </sec:authorize>
 
-    <%--<span><c:out value="${globalMessage}" escapeXml="true"/></span>--%>
 </div>
 </body>
 </html>

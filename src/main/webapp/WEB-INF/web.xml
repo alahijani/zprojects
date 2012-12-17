@@ -41,7 +41,6 @@
     </context-param>
 
     <welcome-file-list>
-        <!--todo-->
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 
