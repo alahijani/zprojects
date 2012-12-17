@@ -15,7 +15,7 @@
 
     <div class="user">
         <h2 class="fullName"><c:out value="${user.fullName}"/></h2>
-        <div class="username"><c:out value="${user.username}"/></div>
+        <div class="username"><spring:message code="user.username"/>: <c:out value="${user.username}"/></div>
         <c:if test="${user.admin}"><div class="admin"><spring:message code="user.is.admin"/></div></c:if>
         <c:if test="${!user.enabled}"><div class="disabled"><spring:message code="user.is.disabled"/></div></c:if>
     </div>
