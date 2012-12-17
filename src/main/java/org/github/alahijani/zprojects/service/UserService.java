@@ -50,8 +50,8 @@ public class UserService extends BaseService<User> {
     }
 
     /**
-     * Called before a call to {@link #save(User)} to check if the {@code username} property of the
-     * {@code user} being saved is a duplicate.
+     * Called before a call to {@link #save(org.github.alahijani.zprojects.model.BaseEntity)}
+     * to check if the {@code username} property of the {@code user} being saved is a duplicate.
      * <p/>
      * Returns true if <ul>
      * <li>the {@code user} is new (transient), and its {@code username} property is already
