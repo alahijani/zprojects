@@ -2,9 +2,14 @@ package org.github.alahijani.zprojects.service;
 
 import org.github.alahijani.zprojects.model.User;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.util.List;
@@ -16,6 +21,9 @@ import java.util.List;
 @Transactional
 public class UserService extends BaseService<User> {
 
+    @Resource
+    private PlatformTransactionManager transactionManager;
+
     public UserService() {
         super(User.class);
     }
@@ -25,6 +33,22 @@ public class UserService extends BaseService<User> {
      */
     @PostConstruct
     void postConstruct() {
+        new TransactionTemplate(transactionManager).execute(new TransactionCallback<Void>() {
+            @Override
+            public Void doInTransaction(TransactionStatus status) {
+                Number count = (Number) em.createQuery("select count(u) from User u").getSingleResult();
+                if (count.intValue() == 0) {
+                    User admin = new User();
+                    admin.setFullName("Administrator");
+                    admin.setUsername("admin");
+                    admin.setPassword("admin");
+                    admin.setEnabled(true);
+                    admin.setAdmin(true);
+                    save(admin);
+                }
+                return null;
+            }
+        });
     }
 
     /**
