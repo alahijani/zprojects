@@ -93,4 +93,10 @@ public class UserService {
         return count.intValue() > 0;
     }
 
+    public void deleteUser(String username) {
+        em.createQuery("delete from User u where u.username = :username")
+                .setParameter("username", username)
+                .executeUpdate();
+    }
+
 }

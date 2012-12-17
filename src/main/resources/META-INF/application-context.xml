@@ -75,11 +75,8 @@
     </security:http>
 
     <security:authentication-manager>
-        <security:authentication-provider>
-            <security:jdbc-user-service data-source-ref="dataSource"
-                                        users-by-username-query="select username,password,enabled from users where username = ?"
-                                        authorities-by-username-query="select username,'admin' from users where admin = 1 and username = ?"
-                    />                  <!--todo fix authorities-by-username-query-->
+        <security:authentication-provider user-service-ref="userDetailsService">
+            <!--<security:password-encoder hash="{sha}" />-->
         </security:authentication-provider>
     </security:authentication-manager>
 </beans>
