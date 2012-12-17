@@ -6,6 +6,7 @@ import org.github.alahijani.zprojects.model.User;
 import org.github.alahijani.zprojects.service.ProjectService;
 import org.github.alahijani.zprojects.service.TaskService;
 import org.github.alahijani.zprojects.service.UserService;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.annotation.Resource;
 import javax.persistence.NoResultException;
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,7 +67,7 @@ public class TaskBean extends BaseBean {
     }
 
     @RequestMapping(value = "/new", method = RequestMethod.POST)
-    public String saveNew(@Valid Task task, BindingResult result, @PathVariable("projectId") String projectId) {
+    public String saveNew(@PathVariable("projectId") String projectId, @Valid Task task, BindingResult result) {
         Project project = projectService.getReference(projectId);
 
         task.setProject(project);
@@ -79,7 +81,7 @@ public class TaskBean extends BaseBean {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public String getById(@PathVariable("id") String id, ModelMap map, @PathVariable("projectId") String projectId) {
+    public String getById(@PathVariable("projectId") String projectId, @PathVariable("id") String id, ModelMap map) {
         Task task = taskService.findById(id);
         if (!task.getProject().getId().equals(projectId))
             throw new NoResultException();
@@ -91,7 +93,7 @@ public class TaskBean extends BaseBean {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)
-    public String saveById(@PathVariable("id") String id, @Valid Task task, BindingResult result, @PathVariable("projectId") String projectId) {
+    public String saveById(@PathVariable("projectId") String projectId, @PathVariable("id") String id, @Valid Task task, BindingResult result) {
         Project project = projectService.getReference(projectId);
 
         task.setId(id);
@@ -106,7 +108,7 @@ public class TaskBean extends BaseBean {
 
         task = taskService.save(task);
 
-        return "redirect:/project/" + project.getId() + "/task/" + task.getId();
+        return "redirect:/project/" + projectId + "/task/" + id;
     }
 
     /**
@@ -123,6 +125,41 @@ public class TaskBean extends BaseBean {
             map.put(user, user.getFullName());
         }
         return map;
+    }
+
+    /**
+     * Reassigns the given {@link Task} to another user.
+     *
+     * @param id        ID of the {@link Task} to reassign
+     * @param task      need not be {@link Valid}, only value of {@link Task#assignee assignee} matters
+     * @param projectId ID of the parent {@link Project}
+     * @return a redirect to the newly saved task
+     */
+    @RequestMapping(value = "/{id}/assignee", method = RequestMethod.POST)
+    public String reassign(@PathVariable("projectId") String projectId,
+                           @PathVariable("id") String id,
+                           Task task,
+                           Principal principal) {
+
+        User assignee = task.getAssignee();
+
+        /**
+         * reload the data from the database
+         */
+        task = taskService.findById(id);
+
+        if (!task.getProject().getId().equals(projectId))
+            throw new NoResultException("Task with ID " + id + " in project with ID " + projectId);
+
+        User oldAssignee = task.getAssignee();
+        if (oldAssignee == null || !oldAssignee.getUsername().equals(principal.getName()))
+            throw new AccessDeniedException("Cannot be reassigned");
+
+        task.setAssignee(assignee);
+
+        task = taskService.save(task);
+
+        return "redirect:/project/" + projectId + "/task/" + id;
     }
 
 }

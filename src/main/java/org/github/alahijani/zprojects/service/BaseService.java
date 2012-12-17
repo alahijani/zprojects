@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.WebDataBinder;
 
+import javax.annotation.Nonnull;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -43,6 +44,7 @@ public abstract class BaseService<E extends BaseEntity> {
         return em.merge(entity);
     }
 
+    @Nonnull
     public E findById(String id) throws NoResultException {
         E entity = em.find(entityClass, id);
         if (entity == null)
