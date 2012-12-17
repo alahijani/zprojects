@@ -63,8 +63,6 @@ public class ProjectBean {
         return "redirect:/project/" + project.getId();
     }
 
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(NoResultException.class)
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String getById(@PathVariable("id") String id, ModelMap map, Principal principal) {
         Project project = projectService.findById(id);
@@ -97,4 +95,8 @@ public class ProjectBean {
         return "redirect:/project/" + project.getId();
     }
 
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(NoResultException.class)
+    public void notFount() {
+    }
 }

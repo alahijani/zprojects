@@ -44,10 +44,14 @@ public abstract class BaseService<E extends BaseEntity> {
     }
 
     public E findById(String id) throws NoResultException {
-        return em.find(entityClass, id);
+        E entity = em.find(entityClass, id);
+        if (entity == null)
+            throw new NoResultException(entityClass.getName() + "#" + id);
+
+        return entity;
     }
 
-    public E getReference(String id) throws NoResultException {
+    public E getReference(String id) {
         return em.getReference(entityClass, id);
     }
 

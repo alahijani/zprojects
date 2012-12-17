@@ -76,8 +76,6 @@ public class TaskBean {
         return "redirect:/project/" + project.getId() + "/task/" + task.getId();
     }
 
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(NoResultException.class)
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String getById(@PathVariable("id") String id, ModelMap map, @PathVariable("projectId") String projectId) {
         Task task = taskService.findById(id);
@@ -125,4 +123,8 @@ public class TaskBean {
         return map;
     }
 
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(NoResultException.class)
+    public void notFount() {
+    }
 }

@@ -59,8 +59,6 @@ public class UserBean {
         return "redirect:/user/" + user.getId();
     }
 
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(NoResultException.class)
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String getById(@PathVariable("id") String id, ModelMap map) {
         User user = userService.findById(id);
@@ -87,4 +85,8 @@ public class UserBean {
         return "redirect:/user/" + user.getId();
     }
 
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(NoResultException.class)
+    public void notFount() {
+    }
 }
