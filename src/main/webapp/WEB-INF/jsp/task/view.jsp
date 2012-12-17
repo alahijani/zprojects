@@ -59,7 +59,7 @@
                             code="task.assignee"/></form:label><br/>
                     <form:select path="assignee">
                         <form:option value="${null}" label="--- Select ---"/>
-                        <form:options items="${allUsers}" />
+                        <form:options items="${allUsers}"/>
                     </form:select>
                     <form:errors path="assignee"/>
                 </p>
@@ -69,6 +69,24 @@
         </div>
     </sec:authorize>
 
+    <%-- this is only for UI. actual authorization is performed in the form action --%>
+    <c:if test="${pageContext.request.remoteUser == task.assignee.username}">
+        <form:form modelAttribute="task" action="/project/${task.project.id}/task/${task.id}/assignee" method="post">
+            <p>
+                <form:label path="assignee" for="assignee" cssErrorClass="error"><spring:message
+                        code="task.assignee"/></form:label><br/>
+                <form:select path="assignee">
+                    <form:option value="${null}" label="--- Select ---"/>
+                    <form:options items="${allUsers}"/>
+                </form:select>
+                <form:errors path="assignee"/>
+            </p>
+
+            <input value="Save Changes" type="submit">
+        </form:form>
+    </c:if>
+
+        <a href="${pageContext.request.servletPath}/"
     <%--<span><c:out value="${globalMessage}" escapeXml="true"/></span>--%>
 </div>
 </body>
